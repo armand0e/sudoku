@@ -1,9 +1,9 @@
-# PyGame - Sudoku
+# Sudoku-Project
 Your team will develop a Sudoku GUI application using object-oriented programming and event-driven programming.
 
 You can use this handout to complete the project and must complete all classes and methods as described.
 
-* [Project 4 PDF](https://github.com/armand0e/PyGame/blob/main/COP3502C_Final_Project.pdf)
+* [Project 4 PDF](https://github.com/armand0e/PyGame-Sudoku-Project/blob/main/COP3502C_Final_Project.pdf)
 
 PyGame Tutorial (tic tac toe, main menu with button): [Video Tutorial](https://www.youtube.com/watch?v=U9H60qtw0Yg&ab_channel=LoganChenicek-UF) + Module 11 lecture videos
 
