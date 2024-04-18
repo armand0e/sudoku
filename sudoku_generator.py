@@ -1,4 +1,4 @@
-import math,random
+import math,random,pygame
 
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
@@ -27,11 +27,7 @@ class SudokuGenerator:
         self.removed_cells = removed_cells
         self.box_length = self.row_length ** 0.5
         self.board = [[0]*self.row_length for i in range(9)]
-
-                
-            
-            
-
+        
     '''
 	Returns a 2D python list of numbers which represents the board
 
@@ -139,7 +135,6 @@ class SudokuGenerator:
                    return True
         return False
                     
-
     '''
     Fills the specified 3x3 box with values
     For each position, generates a random digit which has not yet been used in the box
@@ -162,10 +157,7 @@ class SudokuGenerator:
                     continue
                 self.board[row][col] = valid_nums[iterations]
                 iterations += 1
-                
-                
-                
-    
+
     '''
     Fills the three boxes along the main diagonal of the board
     These are the boxes which start at (0,0), (3,3), and (6,6)
@@ -244,8 +236,7 @@ class SudokuGenerator:
     def remove_cells(self):
         removed = 0
         while removed < self.removed_cells:
-            break
-            
+            break        
             
 class Cell:
     def __init__(self, value, row, col, screen):
@@ -272,43 +263,60 @@ class Board:
         # Constructor for the Board class.
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard.
-        pass
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+    
     def draw(self):
         # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
         # Draws every cell on this board.
-        pass
+        cell_size = 100 #Set the size of the grid block
+        for x in range(200, self.width, cell_size):
+            for y in range(100, self.height, cell_size):
+                rect = pygame.Rect(x, y, cell_size, cell_size)
+                pygame.draw.rect(self.screen, [128,128,128], rect, 1)
+                
     def select(self, row, col):
         # Marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value.
         pass
+    
     def click(self, x, y):
         # If a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col)
         # of the cell which was clicked. Otherwise, this function returns None.
         pass
+    
     def clear(self):
         # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
         # filled by themselves.
         pass
+    
     def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
         # It will be displayed at the top left corner of the cell using the draw() function.
         pass
+    
     def place_number(self, value):
         # Sets the value of the current selected cell equal to user entered value.
         # Called when the user presses the Enter key.
         pass
+    
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
         pass
+    
     def is_full(self):
         # Returns a Boolean value indicating whether the board is full or not.
         pass
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.
         pass
+    
     def find_empty(self):
         # Finds an empty cell and returns its row and col as a tuple (x, y).
         pass
+    
     def check_board(self):
         # Check whether the Sudoku board is solved correctly.
         pass
