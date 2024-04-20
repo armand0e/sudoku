@@ -133,9 +133,9 @@ def main():
     # game over screen
     while gameover:
         if winner:
-            print("YOU WON!")
+            pass
         else:
-            print("YOU LOST!")  
+            pass
 
         pygame.display.update()        
   
