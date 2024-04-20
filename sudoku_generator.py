@@ -257,7 +257,7 @@ class Cell:
         self.screen = screen
         self.empty = True
         self.rect = None
-        self.sketeched = False
+        self.sketched = False
         self.sketchable = False
         if self.value == 0:
             self.sketchable = True
@@ -375,7 +375,7 @@ class Board:
     def place_number(self, value):
         # Sets the value of the current selected cell equal to user entered value.
         # Called when the user presses the Enter key.
-        self.selected_cell.set_cell_value(self.selected_cell.sketched_value)
+        self.selected_cell.set_cell_value(value)
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
@@ -409,12 +409,10 @@ class Board:
 
     def check_board(self):
         # Check whether the Sudoku board is solved correctly.
-        if self.is_full():
-            self.update_board()
-            for row in range(len(self.board)):
-                for col in range(len(self.board)):
-                    if self.generator.is_valid(row, col, self.board[row][col]):
-                        return True
+        for row in range(len(self.board)):
+            for col in range(len(self.board)):
+                if self.generator.is_valid(row, col, self.board[row][col]):
+                    return True
         return False
 
 

@@ -32,8 +32,11 @@ def main():
     runs = 0
     board = Board(450, 450, screen, 30)
     game = False
+    winner = False
+    gameover = False
+    mainmenu = True
     # main
-    while True:
+    while mainmenu:
         # window background
         screen.fill([200, 200, 200])
         screen.blit(title_surface, title_rect)
@@ -45,17 +48,17 @@ def main():
             if pygame.mouse.get_pressed()[0] == 1:
                 difficulty = 30
                 game = True
-                break
+                mainmenu = False
         if medium_rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0] == 1:
                 difficulty = 40
                 game = True
-                break
+                mainmenu = False
         if hard_rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0] == 1:
                 difficulty = 40
                 game = True
-                break
+                mainmenu = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()        
@@ -106,15 +109,42 @@ def main():
                     case pygame.K_9:
                         cell_input = 9
                 if event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
-                    cell_input = 0
+                    board.clear()
                 if board.selected != False and cell_input != None:
                     if board.selected_cell.sketchable:
-                        board.selected_cell.set_sketched_value(cell_input)
+                        board.sketch(cell_input)
+                elif event.key == pygame.K_RETURN:
+                    for row in range(len(board.cells)):
+                        board.place_number(board.selected_cell.sketched_value)
+                        board.selected_cell.sketchable = False
                         board.update_board()
-                    
+                        if board.is_full():
+                            
+                            if board.check_board():
+                                winner = True
+                            else:
+                                winner = False
+                            game = False
+                            gameover = True
+            
             elif event.type == pygame.QUIT:
                 quit()
-        pygame.display.update()
+        pygame.display.update()        
+    # game over screen
+    while gameover:
+        if winner:
+            print("YOU WON!")
+        else:
+            print("YOU LOST!")  
+
+        pygame.display.update()        
+  
+                                
+                                
+                        
+                    
+            
+        
     
 
 if __name__ == '__main__':
