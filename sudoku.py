@@ -72,6 +72,7 @@ def main():
             runs += 1
         # draw board
         board.draw()
+        # draw red outline around selected cell
         if board.selected == True:
             width = 4
             x1, y1 = board.selected_cell.x, board.selected_cell.y
@@ -79,7 +80,8 @@ def main():
             pygame.draw.line(board.screen, (255,0,0), (x1, y1), (x2, y1), width)
             pygame.draw.line(board.screen, (255,0,0), (x1, y1), (x1, y2), width)
             pygame.draw.line(board.screen, (255,0,0), (x2, y1), (x2, y2), width)
-            pygame.draw.line(board.screen, (255,0,0), (x1, y2), (x2, y2), width) 
+            pygame.draw.line(board.screen, (255,0,0), (x1, y2), (x2, y2), width)
+            
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
@@ -108,24 +110,25 @@ def main():
                         cell_input = 8
                     case pygame.K_9:
                         cell_input = 9
-                if event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
-                    board.clear()
-                if board.selected != False and cell_input != None:
-                    if board.selected_cell.sketchable:
-                        board.sketch(cell_input)
+                if event.key in [pygame.K_DELETE, pygame.K_BACKSPACE, pygame.K_ESCAPE]:
+                    cell_input = 0
                 elif event.key == pygame.K_RETURN:
                     for row in range(len(board.cells)):
-                        board.place_number(board.selected_cell.sketched_value)
-                        board.selected_cell.sketchable = False
-                        board.update_board()
+                        if board.selected_cell.sketched_value != 0:
+                            board.place_number(board.selected_cell.sketched_value)
+                            board.selected_cell.sketchable = False
+                            board.update_board()
                         if board.is_full():
-                            
                             if board.check_board():
                                 winner = True
                             else:
                                 winner = False
                             game = False
                             gameover = True
+                if board.selected != False and cell_input != None:
+                    if board.selected_cell.sketchable:
+                        board.sketch(cell_input)
+                
             
             elif event.type == pygame.QUIT:
                 quit()
@@ -133,9 +136,11 @@ def main():
     # game over screen
     while gameover:
         if winner:
-            pass
+            print("You win!")
+            input('leave now.')
         else:
-            pass
+            print("You lose!")
+            input('leave now.')
 
         pygame.display.update()        
   
