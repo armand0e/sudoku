@@ -139,7 +139,7 @@ def main():
                             cell_input = 8
                         case pygame.K_9:
                             cell_input = 9
-                    if event.key in [pygame.K_DELETE, pygame.K_BACKSPACE, pygame.K_ESCAPE]:
+                    if event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
                         cell_input = 0
                     elif event.key == pygame.K_RETURN:
                         for row in range(len(board.cells)):
