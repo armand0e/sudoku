@@ -308,11 +308,12 @@ class Board:
         self.difficulty = difficulty
         self.generator = SudokuGenerator(9, self.difficulty)
         self.generator.fill_values()
+        solution = self.generator.get_board()
+        self.solution = [[j for j in solution[i]] for i in range(len(solution))]
         self.generator.remove_cells()
-        self.board = self.generator.get_board()
-        self.ogboard = self.generator.get_board()
-        self.sketched_board = self.generator.get_board()
-        self.cells = [[Cell(self.board[row][col], row, col, self.screen) for col in range(9)] for row in range(9)]
+        ogboard = self.generator.get_board()
+        self.original_board = [[j for j in ogboard[i]] for i in range(len(ogboard))]
+        self.cells = [[Cell(self.generator.board[row][col], row, col, self.screen) for col in range(9)] for row in range(9)]
         self.selected = False
         self.selected_cell = None
         self.size = 50
@@ -347,6 +348,7 @@ class Board:
         self.selected = True
         
         
+        
     def click(self, x, y):
         # If a tuple of (x,y) coordinates is within the displayed board, this function returns a tuple of the (row,col)
         # of the cell which was clicked. Otherwise, this function returns None.
@@ -365,7 +367,12 @@ class Board:
         # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
         # filled by themselves.
         if self.selected_cell.sketched == True:
+            self.selected_cell.set_sketched_value(0)
             self.selected_cell.set_cell_value(0)
+            self.sketched = True
+            self.selectable = True
+            self.selected = False
+            self.selected_cell = None
 
     def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
@@ -379,8 +386,7 @@ class Board:
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
-        self.cells = [[Cell(self.ogboard[row][col], row, col, self.screen) for col in range(9)] for row in range(9)]
-        self.board = self.ogboard
+        self.cells =  [[Cell(self.original_board[row][col], row, col, self.screen) for col in range(9)] for row in range(9)]
 
     def is_full(self):
         # Returns a Boolean value indicating whether the board is full or not.
@@ -394,8 +400,7 @@ class Board:
         # Updates the underlying 2D board with the values in all cells.
         for row in range(len(self.cells)):
             for col in range(len(self.cells[row])):
-                cell = self.cells[row][col]
-                self.board[row][col] = cell.value
+                self.generator.board[row][col] = self.cells[row][col].value
 
 
     def find_empty(self):
@@ -409,11 +414,16 @@ class Board:
 
     def check_board(self):
         # Check whether the Sudoku board is solved correctly.
-        for row in range(len(self.board)):
-            for col in range(len(self.board)):
-                if self.generator.is_valid(row, col, self.board[row][col]):
-                    return True
-        return False
+        valid = 0
+        self.update_board()
+        for row in range(len(self.generator.board)):
+            for col in range(len(self.generator.board)):
+                if self.generator.board[row][col] == self.solution[row][col]:
+                    valid += 1
+        if valid == 81:
+            return True
+        else:
+            return False
 
 
 """
