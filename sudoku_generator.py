@@ -402,7 +402,6 @@ class Board:
             for col in range(len(self.cells[row])):
                 self.generator.board[row][col] = self.cells[row][col].value
 
-
     def find_empty(self):
         # Finds an empty cell and returns its row and col as a tuple (x, y).
         for row in range(len(self.cells)):
