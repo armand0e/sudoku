@@ -264,7 +264,7 @@ class Cell:
         self.sketched_value = 0
         self.size = 50
         self.y_displacement = self.size
-        self.x_displacement = 3*self.size/2
+        self.x_displacement = 2*self.size
         self.x = self.col * self.size + self.x_displacement
         self.y = self.row * self.size + self.y_displacement
     
@@ -318,7 +318,7 @@ class Board:
         self.selected_cell = None
         self.size = 50
         self.y_displacement = self.size
-        self.x_displacement = 3 * self.size / 2
+        self.x_displacement = 2*self.size
 
     def draw(self):
         # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
@@ -353,7 +353,7 @@ class Board:
         # If a tuple of (x,y) coordinates is within the displayed board, this function returns a tuple of the (row,col)
         # of the cell which was clicked. Otherwise, this function returns None.
         cell = self.cells[0][0]
-        if x <= self.width + cell.x_displacement and y <= self.height + cell.y_displacement:
+        if cell.x_displacement <= x <= self.width + cell.x_displacement and cell.y_displacement <= y <= self.height + cell.y_displacement:
             
             row = int((y - cell.y_displacement) // self.size)
             col = int((x - cell.x_displacement) // self.size)

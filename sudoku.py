@@ -1,16 +1,21 @@
 import pygame
 from sudoku_generator import Board
 
+def draw_border(rect):
+    rect.get_
+
 def main():
     # init
     pygame.init()
-    size = screen_width, screen_height = 600, 650
+    size = screen_width, screen_height = 650, 650
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Sudoku!")
 
     # style
     title_font = pygame.font.SysFont("Courier New", 100)
     menu_font = pygame.font.SysFont("Courier New", 30)
+    game_font = pygame.font.SysFont("Courier New", 20)
+    rules_font = pygame.font.SysFont("Courier New", 15)
     title_font.set_bold(True)
     title_font.set_underline(False)
 
@@ -25,6 +30,16 @@ def main():
     retry_surface = menu_font.render(" Retry ", 1, [64, 64, 64], [255, 255, 255])
     newgame_surface = menu_font.render(" New Game ", 1, [64, 64, 64], [255, 255, 255])
     exit_surface = menu_font.render(" Exit ", 1, [64, 64, 64], [255, 255, 255])
+    back_surface = game_font.render(" Back ", 1, [64, 64, 64], [255, 255, 255])
+    rules_font.set_bold(True)
+    rules_font.set_underline(True)
+    rules_surface = rules_font.render("Rules", 1, [0, 0, 0])
+    #rules_font.set_bold(False)
+    rules_font.set_underline(False)
+    rule1_surface = rules_font.render("- Click on a cell to select it", 1, [0, 0, 0])
+    rule2_surface = rules_font.render("- Type a value to sketch it into the cell", 1, [0, 0, 0])
+    rule3_surface = rules_font.render("- Press backspace or delete to clear a cell", 1, [0, 0, 0])
+    rule4_surface = rules_font.render("- Press enter to lock a cell in", 1, [0, 0, 0])
     
     
 
@@ -33,13 +48,19 @@ def main():
     easy_rect = easy_surface.get_rect(center=(screen_width // 4, screen_height // 2))
     medium_rect = medium_surface.get_rect(center=(2 * screen_width // 4, screen_height // 2))
     hard_rect = hard_surface.get_rect(center=(3* screen_width // 4, screen_height // 2))
-    
     winner_rect = winner_surface.get_rect(center=(screen_width // 2, screen_height // 4))
     loser_rect = loser_surface.get_rect(center=(screen_width // 2, screen_height // 4))
     menu_rect = menu_surface.get_rect(center=(screen_width // 4, 2*screen_height // 3))
     retry_rect = retry_surface.get_rect(center=(2 * screen_width // 4, 2*screen_height // 3))
     newgame_rect = newgame_surface.get_rect(center=(2 * screen_width // 4, 2*screen_height // 3))
     exit_rect = exit_surface.get_rect(center=(3* screen_width // 4, 2*screen_height // 3))
+    back_rect = back_surface.get_rect(center=(50,25))
+    rules_rect = rules_surface.get_rect(center=(screen_width // 2, screen_height-125))
+    rule1_rect = rule1_surface.get_rect(center=(screen_width // 2, screen_height-100))
+    rule2_rect = rule2_surface.get_rect(center=(screen_width // 2, screen_height-80))
+    rule3_rect = rule3_surface.get_rect(center=(screen_width // 2, screen_height-60))
+    rule4_rect = rule4_surface.get_rect(center=(screen_width // 2, screen_height-40))
+    
     # init new game
     runs = 0
     difficulty = 30
@@ -88,9 +109,27 @@ def main():
             
             # fill background
             screen.fill([200, 200, 200])
-
+            
+            # blit rules and back button
+            screen.blit(back_surface, back_rect)
+            screen.blit(rules_surface, rules_rect)
+            screen.blit(rule1_surface, rule1_rect)
+            screen.blit(rule2_surface, rule2_rect)
+            screen.blit(rule3_surface, rule3_rect)
+            screen.blit(rule4_surface, rule4_rect)
+            
             # draw board
             board.draw()
+            
+            # back button
+            if back_rect.collidepoint(pygame.mouse.get_pos()):
+                    if pygame.mouse.get_pressed()[0] == 1:
+                        runs = 0
+                        difficulty = 30
+                        board = Board(450, 450, screen, 30)
+                        winner = None
+                        game_state = "menu"
+                        program_run = True
             
             # if the selected cell is no longer selectable, deselect it.
             try:
