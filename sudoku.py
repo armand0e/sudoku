@@ -1,15 +1,12 @@
 import pygame
 from sudoku_generator import Board
 
-def draw_border(rect):
-    rect.get_
-
 def main():
     # init
     pygame.init()
     size = screen_width, screen_height = 650, 650
     screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("Sudoku!")
+    pygame.display.set_caption("Sudoku")
 
     # style
     title_font = pygame.font.SysFont("Courier New", 100)
@@ -217,7 +214,6 @@ def main():
                 if menu_rect.collidepoint(pygame.mouse.get_pos()):
                     if pygame.mouse.get_pressed()[0] == 1:
                         runs = 0
-                        difficulty = 30
                         board = Board(450, 450, screen, 30)
                         winner = None
                         game_state = "menu"

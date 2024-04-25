@@ -308,8 +308,6 @@ class Board:
         self.difficulty = difficulty
         self.generator = SudokuGenerator(9, self.difficulty)
         self.generator.fill_values()
-        solution = self.generator.get_board()
-        self.solution = [[j for j in solution[i]] for i in range(len(solution))]
         self.generator.remove_cells()
         ogboard = self.generator.get_board()
         self.original_board = [[j for j in ogboard[i]] for i in range(len(ogboard))]
@@ -417,7 +415,7 @@ class Board:
         self.update_board()
         for row in range(len(self.generator.board)):
             for col in range(len(self.generator.board)):
-                if self.generator.board[row][col] == self.solution[row][col]:
+                if self.generator.is_valid(row, col, self.generator.board[row][col]):
                     valid += 1
         if valid == 81:
             return True
