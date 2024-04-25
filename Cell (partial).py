@@ -1,8 +1,3 @@
-# put this at the start of the file
-import pygame
-
-# replace Cell class with this one
-
 class Cell:
     def __init__(self, value, row, col, screen):
         # Constructor for the Cell class
@@ -10,14 +5,18 @@ class Cell:
         self.row = row
         self.col = col
         self.screen = screen
+        self.empty = True
+        self.rect = None
         self.sketched = False
         self.sketchable = False
         if self.value == 0:
             self.sketchable = True
         self.sketched_value = 0
         self.size = 50
-        self.x = self.col * self.size
-        self.y = self.row * self.size 
+        self.y_displacement = 1.5*self.size
+        self.x_displacement = 2*self.size
+        self.x = self.col * self.size + self.x_displacement
+        self.y = self.row * self.size + self.y_displacement
     
     def set_cell_value(self, value):
         # Setter for this cell’s value
@@ -35,7 +34,9 @@ class Cell:
         # The cell is outlined red if it is currently selected. 
         font = pygame.font.SysFont("Courier New", 20)
         font.set_bold(True)
-        pygame.draw.rect(self.screen, [255, 255, 255], (self.x, self.y, self.size, self.size), 0)
+        
+        
+        self.rect = pygame.draw.rect(self.screen, [255, 255, 255], (self.x, self.y, self.size, self.size), 0)
         centerx, centery = self.x + self.size/2, self.y + self.size/2
         if self.value != 0 or self.sketched_value != 0:
             if not self.sketchable:
@@ -44,4 +45,4 @@ class Cell:
                 self.screen.blit(text_surface, text_rect)
             elif self.sketchable:
                 text_surface = font.render(str(self.sketched_value), 1, [128, 128, 128])
-                self.screen.blit(text_surface, (self.x+2,self.y+2))
+                self.screen.blit(text_surface, (self.x+1,self.y+1))
