@@ -263,7 +263,7 @@ class Cell:
             self.sketchable = True
         self.sketched_value = 0
         self.size = 50
-        self.y_displacement = self.size
+        self.y_displacement = 1.5*self.size
         self.x_displacement = 2*self.size
         self.x = self.col * self.size + self.x_displacement
         self.y = self.row * self.size + self.y_displacement
@@ -315,7 +315,7 @@ class Board:
         self.selected = False
         self.selected_cell = None
         self.size = 50
-        self.y_displacement = self.size
+        self.y_displacement = 1.5*self.size
         self.x_displacement = 2*self.size
 
     def draw(self):
