@@ -1,4 +1,12 @@
 # Sudoku-Project
+
+## Fork Repository Instructions
+### Steps:
+1. When you go to the github repository we provided, on the top right hand corner of the screen, there is a button that says "Fork". That will fork the repo to your own github 
+2. Use the link https://github.com/new/import to clone your forked repo to make it private. You will work on the project by adding your own files to this private repository.
+
+# Canvas Instructions
+
 Your team will develop a Sudoku GUI application using object-oriented programming and event-driven programming.
 
 You can use this handout to complete the project and must complete all classes and methods as described.
@@ -39,3 +47,4 @@ PyGame Tutorial (tic tac toe, main menu with button): [Video Tutorial](https://w
     * You may record the video as a group or have a single member present.
     * You can use the recording software of your choice. We recommend Loom, Zoom, or QuickTime player on Mac.
 * Note that each group will receive the same score/grade. However, if we observe issues in peer grading, there will be individual penalties from 20-100% of your project grade based on social loafing or not pulling your weight.
+
